@@ -1,0 +1,93 @@
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@mixin flex-row-center {
+  display: flex;
+  justify-content: center;
+}
+
+@mixin flex-space-around {
+  display: flex;
+  justify-content: space-around;
+}
+
+@mixin absolute-position($top, $right, $bottom, $left) {
+  position: absolute;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+@mixin border-radius($radius) {
+  border-radius: $radius;
+}
+
+@mixin box-shadow($shadow) {
+  box-shadow: $shadow;
+}
+
+@mixin font-family($family) {
+  font-family: $family;
+}
+
+@mixin font-size($size) {
+  font-size: $size;
+}
+
+@mixin font-weight($weight) {
+  font-weight: $weight;
+}
+
+@mixin letter-spacing($spacing) {
+  letter-spacing: $spacing;
+}
+
+@mixin line-height($height) {
+  line-height: $height;
+}
+
+@mixin color($color) {
+  color: $color;
+}
+
+@mixin padding($padding) {
+  padding: $padding;
+}
+
+@mixin margin($margin) {
+  margin: $margin;
+}
+
+@mixin background-color($color) {
+  background-color: $color;
+}
+
+@mixin border($border) {
+  border: $border;
+}
+
+@mixin text-align($align) {
+  text-align: $align;
+}
+
+@mixin vertical-align($align) {
+  vertical-align: $align;
+}
+
+@mixin text-decoration($decoration) {
+  text-decoration: $decoration;
+}
+
+@mixin opacity($opacity) {
+  opacity: $opacity;
+}

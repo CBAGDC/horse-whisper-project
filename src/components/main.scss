@@ -1,0 +1,228 @@
+@import 'variables';
+@import 'mixins';
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
+.clearfix::before,
+.clearfix::after {
+  content: "";
+  display: table;
+}
+
+.clearfix::after {
+  clear: both;
+}
+
+@font-face {
+  font-family: 'DeYiHei';
+  src: url('../fonts/SmileySans-Oblique.otf') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('../fonts/Inter-Medium.otf') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SiYuanHeiTiB';
+  src: url('../fonts/SourceHanSansSC-Bold.otf') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SiYuanHeiTiR';
+  src: url('../fonts/SourceHanSansSC-Regular.otf') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.container {
+  @include flex-center;
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0 auto;
+  display: flex;
+}
+
+.left-section {
+  z-index: 0;
+  flex: 0 40%;
+  @include background-color($background-color-gray);
+  @include padding($padding-large);
+  @include border-radius($border-radius);
+  @include box-shadow($box-shadow);
+}
+
+.right-section {
+  z-index: 0;
+  flex: 0 60%;
+  @include background-color($background-color-black);
+  @include padding($padding-medium $padding-medium $padding-medium $padding-small);
+  position: relative;
+  @include flex-column-center;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+@media (max-width: 1400px) {
+  .left-section, .right-section {
+    flex: 0 0 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+  .left-section, .right-section {
+    flex: none;
+    width: 100%;
+  }
+  .navbar {
+    position: static;
+    @include flex-space-around;
+  }
+}
+
+.navbar {
+  @include absolute-position($navbar-top, $navbar-right, null, null);
+  z-index: $navbar-z-index;
+}
+
+.navbar ul {
+  @include flex-row-center;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar ul li {
+  list-style: none;
+  @include opacity(1);
+  @include border-radius($border-radius);
+  @include background-color($background-color-dark-gray);
+  @include border(1px solid $border-color);
+  @include margin-right($margin-right);
+  @include flex-center;
+  @include padding-left($icon-padding-left);
+}
+
+.navbar ul li a {
+  width: 100%;
+  height: 20px;
+  @include opacity(1);
+  @include font-family($font-family-primary);
+  @include font-size($font-size-base);
+  @include line-height(20px);
+  @include color(rgba(255, 255, 255, 1));
+  @include text-align(left);
+  @include vertical-align(top);
+  @include text-decoration(none);
+  @include font-weight($font-weight-light);
+}
+
+.navbar ul li.icon-item {
+  @include padding-left($icon-padding-left);
+  width: $icon-size;
+  height: $icon-size;
+  @include background-color(transparent);
+  @include border(none);
+  @include margin-right($icon-margin-right);
+}
+
+.navbar ul li.icon-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.main-header {
+  @include absolute-position($main-header-top, null, null, $main-header-left);
+  z-index: $main-header-z-index;
+  @include margin-bottom($margin-bottom);
+  @include font-family($font-family-primary);
+}
+
+.main-header p {
+  display: inline-block;
+}
+
+.main-header p:nth-child(1) {
+  @include font-size($main-header-font-size-1);
+  @include letter-spacing($letter-spacing-large);
+  @include line-height($line-height-large);
+  @include color($main-header-color-1);
+  @include text-align(left);
+  @include vertical-align(bottom);
+  @include margin-bottom($margin-bottom);
+}
+
+.main-header p:nth-child(2) {
+  @include font-size($main-header-font-size-1);
+  @include letter-spacing($letter-spacing-large);
+  @include line-height($line-height-large);
+  @include color($main-header-color-2);
+  @include text-align(left);
+  @include vertical-align(bottom);
+}
+
+.text-content {
+  @include absolute-position(null, null, $text-content-bottom, $text-content-left);
+  z-index: $text-content-z-index;
+  @include color($text-content-color);
+  @include font-size($text-content-font-size-2);
+  @include flex-column-center;
+  @include font-family($font-family-secondary);
+}
+
+.text-content p:nth-child(1) {
+  @include font-size($text-content-font-size-1);
+  @include text-align(center);
+}
+
+.text-content p:nth-child(3) {
+  @include text-align(center);
+}
+
+.stats-footer {
+  @include absolute-position($stats-footer-bottom, null, null, $stats-footer-left);
+  @include flex-space-around;
+  @include padding-left($stats-footer-padding-left);
+  @include padding-bottom($stats-footer-padding-bottom);
+}
+
+.stats-footer div {
+  @include flex-column-center;
+  @include margin(20px);
+  @include color($secondary-color);
+}
+
+.stats-footer span {
+  @include font-size($stats-footer-span-font-size);
+  @include font-weight($stats-footer-span-font-weight);
+  @include padding-bottom($stats-footer-span-padding-bottom);
+  @include font-family($font-family-bold);
+}
+
+.stats-footer p {
+  @include font-size($stats-footer-p-font-size);
+  @include color($text-content-color);
+  @include font-family($font-family-regular);
+}
+
+.next-page {
+  @include absolute-position($next-page-bottom, null, null, $next-page-left);
+  z-index: $next-page-z-index;
+}
