@@ -1,65 +1,62 @@
 // main.js
 import { createApp } from 'vue';
 import App from './App.vue';
-import router from './router'; // 直接导入已经创建好的 router 实例
-import { createI18n } from 'vue-i18n';
-import store from './store';
-import NextPage from './components/NextPage.vue';
+import router from './router';
+import { createPinia } from 'pinia';
+import '@fortawesome/fontawesome-free/css/all.css';
+import ElementPlus from 'element-plus';
+import 'element-plus/dist/index.css';
+import axios from 'axios';
+import VueLazyload from 'vue-lazyload';
+import { useThemeStore } from '@/stores/theme';
+import i18n from './i18n'; // 确保这里导入的是你之前配置好的 i18n 实例
 
-// 定义多语言消息
-const messages = {
-    en: {
-      translation: {
-        myPersonalStory: 'My Personal Story',
-        ridersStories: 'Riders and their Stories',
-        aboutEquestrian: 'About Equestrian',
-        aboutHorses: 'About Horses',
-        mainHeaderPart1: 'Horse whis',
-        mainHeaderPart2: 'per',
-        mainHeaderPart3: "Jialiang's Personal",
-        mainHeaderPart4: 'Web Page',
-        authorName:'Li Jialiang',
-        authorDescription1:'Fresh clothes when the young horse, not young line and know',
-        authorDescription2:'Share Everyday Learning, Life and Equestrian Knowledge',
- 
-        articles: 'Articles',
-        views: 'Views',
-        runtime: 'Runtime',
-        nextpage: 'Next Page'
+const pinia = createPinia();
 
-      }
-    },
-    zh: {
-      translation: {
-        myPersonalStory: '我的个人故事',
-        ridersStories: '骑手和他们的故事',
-        aboutEquestrian: '关于马术',
-        aboutHorses: '关于马',
-        mainHeaderPart1: '马语',
-        mainHeaderPart2: '者',
-        mainHeaderPart3: "嘉良的个人",
-        mainHeaderPart4: '网页',
-        authorName:'李嘉良',
-        authorDescription1:'鲜衣怒马少年时，不识愁滋味，',
-        authorDescription2:'分享每日学习、生活和马术知识。',
-     
-        articles: '文章',
-        views: '浏览',
-        runtime: '运行时间',
-        nextpage: '下一页'
-      }
-    }
-  };
+const app = createApp(App);
+app.use(router);
+app.use(i18n); // 使用创建的 i18n 实例
+app.use(pinia);
 
-// 创建 i18n 实例
-const i18n = createI18n({
-  locale: 'en', // 设置默认语言
-  messages,
+axios.defaults.baseURL = 'http://cwebcrm.cn:8046/api/v1/notices/2/detail';
+app.config.globalProperties.$axios = axios;
+
+
+app.config.errorHandler = (err, vm, info) => {
+  console.error('Global Error Handler:', err, info);
+};
+
+
+app.use(VueLazyload, {
+  preLoad: 1.3,
+  error: 'dist/error.png',
+  loading: 'dist/loading.gif',
+  attempt: 1
 });
 
-// 创建 Vue 应用实例并挂载所有插件
-const app = createApp(App);
-app.use(router); // 挂载路由实例
-app.use(i18n);   // 挂载国际化插件
-app.use(store);
+const themeStore = useThemeStore();
+
+// 添加调试信息
+console.log('Initial themeStore state:', themeStore);
+
+const darkModeFromStorage = localStorage.getItem('darkMode');
+console.log('darkMode from localStorage:', darkModeFromStorage);
+// 添加调试信息
+console.log('Initial themeStore state:', themeStore);
+console.log('Initial isDarkMode:', themeStore.isDarkMode);
+console.log('Initial ahOpdBackgroundColor:', themeStore.ahOpdBackgroundColor);
+
+
+if (darkModeFromStorage === 'true') {
+  themeStore.toggleDarkMode();
+}
+
+console.log('Final themeStore state:', themeStore.isDarkMode);
+
+// 条件导入 sanitize-html
+if (typeof window === 'undefined') {
+  const sanitizeHtml = require('sanitize-html');
+  // 在服务器端使用 sanitizeHtml
+}
+
 app.mount('#app');
